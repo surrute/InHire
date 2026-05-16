@@ -17,6 +17,7 @@ type
     { Public declarations }
     procedure InserirDadosBD(const ASQL: string);
     function ExecutarSQL(const ASQL: string): TFDQuery;
+    function ValidaCSTEmpresa(ACST, AEstadoEmpresa, AEstadoPessoa, ACFOP: string): Boolean;
   end;
 
 var
@@ -62,6 +63,18 @@ begin
   finally
     Qry.Free;
   end;
+end;
+
+function TDM.ValidaCSTEmpresa(ACST, AEstadoEmpresa, AEstadoPessoa, ACFOP: string): Boolean;
+begin
+  Result := False;
+
+  if ((ACST = '010') and ((AEstadoEmpresa = 'PR') or (AEstadoPessoa = 'SP'))) or
+     ((ACST = '010') and ((AEstadoEmpresa = 'PR') or (AEstadoPessoa <> 'SC'))) or
+     ((ACST = '010') and ((AEstadoEmpresa = 'PR') or (AEstadoPessoa <> 'RJ'))) or
+     ((ACST = '020') and ((AEstadoEmpresa <> 'SP') and (AEstadoPessoa = 'SP'))) then
+    Result := True;
+
 end;
 
 end.

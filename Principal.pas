@@ -4,8 +4,9 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
-  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
-  Vcl.StdCtrls, Vcl.Buttons, Data.DB, Vcl.Grids, Vcl.DBGrids;
+  System.Classes, System.Generics.Collections, Vcl.Graphics, Vcl.Controls,
+  Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Data.DB, Vcl.Grids,
+  Vcl.DBGrids;
 
 type
   TForm1 = class(TForm)
@@ -21,12 +22,14 @@ type
     bbConsultaVenda: TBitBtn;
     Label2: TLabel;
     DataSource: TDataSource;
+    bbInserir10Produtos: TBitBtn;
     procedure bbInserir5ClientesClick(Sender: TObject);
     procedure bbInserir5CarrosClick(Sender: TObject);
     procedure bbInserir5VendasClick(Sender: TObject);
     procedure bbConsultaClienteClick(Sender: TObject);
     procedure bbConsultaCarroClick(Sender: TObject);
     procedure bbConsultaVendaClick(Sender: TObject);
+    procedure bbInserir10ProdutosClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -39,7 +42,7 @@ var
 implementation
 
 uses
-  uDM, Cliente, Carro, Venda;
+  uDM, Cliente, Carro, Venda, Produto;
 
 {$R *.dfm}
 
@@ -77,6 +80,40 @@ begin
     strSQL := strSQL + ' WHERE ID_VENDA = ' + edtConsulta.Text;
 
   DataSource.DataSet := DM.ExecutarSQL(strSQL);
+end;
+
+procedure TForm1.bbInserir10ProdutosClick(Sender: TObject);
+var
+  ListaProdutos: TObjectList<TProduto>;
+  Produto: TProduto;
+  I: Integer;
+begin
+  ListaProdutos := TObjectList<TProduto>.Create(True);
+  try
+
+    for I := 1 to 10 do
+    begin
+      Produto := TProduto.Create;
+
+      Produto.IdProduto := I;
+      Produto.Descricao := 'PRODUTO ' + IntToStr(I);
+
+      // FK fictícia
+      Produto.IdProdutoRegra := 1;
+
+      ListaProdutos.Add(Produto);
+    end;
+
+    for Produto in ListaProdutos do
+    begin
+      Produto.GravarProduto;
+
+      ShowMessage('Produto gravado: ' + Produto.Descricao);
+    end;
+
+  finally
+    ListaProdutos.Free;
+  end;
 end;
 
 procedure TForm1.bbInserir5CarrosClick(Sender: TObject);

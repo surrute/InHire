@@ -4,7 +4,7 @@ object Form1: TForm1
   BorderStyle = bsDialog
   Caption = 'InHire'
   ClientHeight = 348
-  ClientWidth = 473
+  ClientWidth = 613
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -147,6 +147,15 @@ object Form1: TForm1
       E80DDDDDDD00777700DDDDDDDDD800008DDDDDDDDDDDDDDDDDDD}
     TabOrder = 7
     OnClick = bbConsultaVendaClick
+  end
+  object bbInserir10Produtos: TBitBtn
+    Left = 455
+    Top = 23
+    Width = 137
+    Height = 65
+    Caption = 'Inserir 10 Produtos'
+    TabOrder = 8
+    OnClick = bbInserir10ProdutosClick
   end
   object DataSource: TDataSource
     Left = 232

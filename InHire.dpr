@@ -6,7 +6,8 @@ uses
   Cliente in 'Cliente.pas',
   Carro in 'Carro.pas',
   Venda in 'Venda.pas',
-  uDM in 'uDM.pas' {DM: TDataModule};
+  uDM in 'uDM.pas' {DM: TDataModule},
+  Produto in 'Produto.pas';
 
 {$R *.res}
 
